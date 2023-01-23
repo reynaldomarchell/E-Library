@@ -46,56 +46,56 @@ void credit(){
 //  Credit member of Group 1 from LB75 Class.
 	printf("\033[0;36m");
 	usleep(1000);  
-  	printf("Thank you for using our program. See you again another time! ^_^\n");
-  	usleep(1000); 
-  	puts("");
-  	usleep(1000); 
-  	puts("");
-  	usleep(1000); 
-  	printf("Our Member : \n");
-  	usleep(1000); 
-  	puts("");
-  	usleep(1000); 
-  	puts("");
-  	usleep(1000); 
-  	printf("1. 2602096306 - Deli Irawan\n");
-  	usleep(1000); 
-  	puts("");
-  	usleep(1000); 
-  	puts("");
-  	usleep(1000); 
-  	printf("2. 2602138214 - Reynaldo Marchell\n");
-  	usleep(1000); 
-  	puts("");
-  	usleep(1000); 
-  	puts("");
-  	usleep(1000); 
-  	printf("3. 2602065950 - Ravel Jonathan\n");
-  	usleep(1000); 
-  	puts("");
-  	usleep(1000); 
-  	puts("");
-  	usleep(1000); 
-  	printf("4. 2602086753 - Samuel Alfonsus\n");
-  	usleep(1000); 
-  	puts("");
-  	usleep(1000); 
-  	puts("");
-  	usleep(1000); 
-  	printf("5. 2602080005 - Charis Tedjasukma\n");
-  	usleep(1000); 
-  	puts("");
-  	usleep(1000); 
-  	puts("");
-  	usleep(1000); 
-  	printf("6. 2602153373 - Muhammad Daffa\n");
-  	usleep(1000); 
-  	puts("");
-  	usleep(1000); 
-  	puts("");
-  	usleep(1000); 
-  	puts("");
-  	usleep(1000); 
+	printf("Thank you for using our program. See you again another time! ^_^\n");
+	usleep(1000); 
+	puts("");
+	usleep(1000); 
+	puts("");
+	usleep(1000); 
+	printf("Our Member : \n");
+	usleep(1000); 
+	puts("");
+	usleep(1000); 
+	puts("");
+	usleep(1000); 
+	printf("1. 2602096306 - Deli Irawan\n");
+	usleep(1000); 
+	puts("");
+	usleep(1000); 
+	puts("");
+	usleep(1000); 
+	printf("2. 2602138214 - Reynaldo Marchell\n");
+	usleep(1000); 
+	puts("");
+	usleep(1000); 
+	puts("");
+	usleep(1000); 
+	printf("3. 2602065950 - Ravel Jonathan\n");
+	usleep(1000); 
+	puts("");
+	usleep(1000); 
+	puts("");
+	usleep(1000); 
+	printf("4. 2602086753 - Samuel Alfonsus\n");
+	usleep(1000); 
+	puts("");
+	usleep(1000); 
+	puts("");
+	usleep(1000); 
+	printf("5. 2602080005 - Charis Tedjasukma\n");
+	usleep(1000); 
+	puts("");
+	usleep(1000); 
+	puts("");
+	usleep(1000); 
+	printf("6. 2602153373 - Muhammad Daffa\n");
+	usleep(1000); 
+	puts("");
+	usleep(1000); 
+	puts("");
+	usleep(1000); 
+	puts("");
+	usleep(1000); 
 	printf("\033[0m");
 
 }
@@ -475,52 +475,52 @@ void list_buku(){
 char* welcome();
 
 char* login(){
-   // Get data from user list 
-   char username[100],password[100];
-   user user[1000];
-   char line[100000];
-   int total_data=0;
-   FILE *fpu = fopen("user.dat", "r");
+	// Get data from user list 
+	char username[100],password[100];
+	user user[1000];
+	char line[100000];
+	int total_data=0;
+	FILE *fpu = fopen("user.dat", "r");
 
-   for(int i=0;fgets(line,100000,fpu);i++){
- 		strcpy(user[i].username,strtok(line,"#"));
- 		strcpy(user[i].password,strtok(NULL,"\n"));
- 		total_data++;
-   }
-   fclose(fpu);
-  
-  	// input to login
-  	test:
+	for(int i=0;fgets(line,100000,fpu);i++){
+	strcpy(user[i].username,strtok(line,"#"));
+	strcpy(user[i].password,strtok(NULL,"\n"));
+	total_data++;
+	}
+	fclose(fpu);
+
+	// input to login
+	test:
 	design();
 
-    printf("\nMasukkan username yang telah didaftarkan:\n");
-    scanf("%s", username);
-    printf("\nMasukkan password yang telah didaftarkan:\n");
-    scanf("%s", password);
-    system("cls");
-    
-    for(int i=0;i<total_data;i++){
-    	if(strcmp(username,user[i].username) == 0 && strcmp(password,user[i].password) == 0){
-        	printf("");
-        	token=1;
-       		return username;
-      	}
- 	}
-
- 	wrong:
-	design();
-    printf("Log in Failed.\n\n");
-    printf("Ingin mencoba kembali? \n");
-    printf("1. Ya     2. Tidak\n");
-    printf("\nJawaban: ");
+	printf("\nMasukkan username yang telah didaftarkan:\n");
+	scanf("%s", username);
+	printf("\nMasukkan password yang telah didaftarkan:\n");
+	scanf("%s", password);
+	system("cls");
 	
-   	int jawaban;
+	for(int i=0;i<total_data;i++){
+		if(strcmp(username,user[i].username) == 0 && strcmp(password,user[i].password) == 0){
+			printf("");
+			token=1;
+			return username;
+		}
+	}
+
+	wrong:
+	design();
+	printf("Log in Failed.\n\n");
+	printf("Ingin mencoba kembali? \n");
+	printf("1. Ya     2. Tidak\n");
+	printf("\nJawaban: ");
+	
+	int jawaban;
 	scanf("%d",&jawaban);
 	getchar();
 
-   	system("cls");
-    if(jawaban==1){
-      	goto test;
+	system("cls");
+	if(jawaban==1){
+		goto test;
 	}
 	else if(jawaban==2){
 		welcome();
@@ -571,32 +571,33 @@ void signin(){
   system("cls");
 
   int panjang= strlen(password);
- 
+
   if(panjang<8){
-  	printf("Maaf, password terlalu pendek. Silahkan input kembali\n ");
-		sleep(2);
-  	system("cls");
-		goto sandi;
-  }else{
-  	for(int i=0;i<panjang;i++){
-  		if(password[i]>=65 && password[i]<=90){
-  			password[i]+=32;
-		  }
-	}
-	if(strrchr(password,'@')==NULL){
-  			printf("Maaf, password harus terdapat simbol \"@\" min 1. Silahkan input kembali\n ");
+	printf("Maaf, password terlalu pendek. Silahkan input kembali\n ");
+	sleep(2);
+	system("cls");
+	goto sandi;
+  }
+	else{
+		for(int i=0;i<panjang;i++){
+			if(password[i]>=65 && password[i]<=90){
+				password[i]+=32;
+			}
+		}
+		if(strrchr(password,'@')==NULL){
+			printf("Maaf, password harus terdapat simbol \"@\" min 1. Silahkan input kembali\n ");
+			sleep(2);
+			system("cls");
+			goto sandi;
+		}
+		for(int i=0;i<panjang;i++){
+			if((password[i]<'a' || password[i]>'z') && (password[i]<'0' || password[i]>'9') && password[i]!='@' && password!='\0'){
+				printf("Password tak boleh terdapat simbol lain selain \"@\". Silahkan Input kembali\n");
 				sleep(2);
 				system("cls");
 				goto sandi;
-	}
-  	for(int i=0;i<panjang;i++){
-  		if((password[i]<'a' || password[i]>'z') && (password[i]<'0' || password[i]>'9') && password[i]!='@' && password!='\0'){
-  			printf("Password tak boleh terdapat simbol lain selain \"@\". Silahkan Input kembali\n");
-  			sleep(2);
-				system("cls");
-				goto sandi;
-		  }
-	}
+			}
+		}
   }
 
   fprintf(fpu, "#%s\n", password);
@@ -623,21 +624,21 @@ char* welcome(){
 	design();
 
 	printf("\nApakah anda sudah memiliki Akun?\n1. Sudah -> Log in\n2. Belum -> Sign in\n");
-    printf("\nPILIHAN: ");
+	printf("\nPILIHAN: ");
 	scanf("%d", &ac);
-    system("cls");
+	system("cls");
     
 	char player[100];
 
-    if(ac == 1)
-    	strcpy(player,login());
-    else if(ac == 2)
-    	signin();
-    else{
-    	printf("Maaf input anda salah, silahkan masukan kembali\n");
-    	welcome();
+	if(ac == 1)
+		strcpy(player,login());
+	else if(ac == 2)
+		signin();
+	else{
+		printf("Maaf input anda salah, silahkan masukan kembali\n");
+		welcome();
 	}
-    return player;
+	return player;
 }
 
 void loading(){
@@ -980,7 +981,6 @@ void design_admin(){
 			"   / /\\ \\ / _` | '_ ` _ \\| | '_ \\ \n"
 			"  / ____ \\ (_| | | | | | | | | | | \n"
 			" /_/    \\_\\__,_|_| |_| |_|_|_| |_| \n"
-
 	);
 }
 
