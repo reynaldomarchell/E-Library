@@ -4,8 +4,9 @@
 #include <errno.h>
 #include <ctype.h>
 #include <time.h>
-#include <stdbool.h>
 #include <math.h>
+#include <stdbool.h>
+#include <windows.h>
 #include <unistd.h>
 #include <conio.h>
 
@@ -207,8 +208,8 @@ void mengembalikan(char player[]){
 	scanf("%d",&data);
 
 	if(data > jumlah || data <= 0){
-			system("cls");
-			return ;
+		system("cls");
+		return ;
 	}
 
 	system("cls");
@@ -217,7 +218,8 @@ void mengembalikan(char player[]){
 	if(balik[arr[data]].tanggal2-penyimpan>=0){
 		printf("Buku telah dikembalikan. Terima Kasih sudah meminjam.\n\n");
 		ngilang();
-	}else{
+	}
+	else{
 		// listing for consequence
 		printf("\033[0;31m");
 		printf("ANDA TELAT\n\n");
@@ -238,20 +240,23 @@ void mengembalikan(char player[]){
 			FILE *blacklist=fopen("data_blacklist.dat","a");
 			fprintf(blacklist,"%s\n",balik[arr[data]].p_username);
 			fclose(blacklist);
-		}else if(waktu_terlambat<1440 && waktu_terlambat>720){
+		}
+		else if(waktu_terlambat<1440 && waktu_terlambat>720){
 			int sisa=waktu_terlambat-720;
 			int sisah=sisa/24;
 			sisa-=(sisah*24);
 			total=(sisah*100000)+(sisa*5000)+5000000;
 			printf("Total denda : %d\n",total);
 			payment(total);
-		}else if(waktu_terlambat<720 && waktu_terlambat>24){
+		}
+		else if(waktu_terlambat<720 && waktu_terlambat>24){
 			int sisa=waktu_terlambat/24;
 			int sisaj=waktu_terlambat-(sisa*24);
 			total=((waktu_terlambat/24)*100000)+(sisaj*5000);
 			printf("Total denda : %d\n",total);
 			payment(total);
-		}else if(waktu_terlambat<24){
+		}
+		else if(waktu_terlambat<24){
 			total=waktu_terlambat*5000;
 			printf("Total denda : %d\n",total);
 			payment(total);
@@ -259,45 +264,45 @@ void mengembalikan(char player[]){
 	}
 	
 	// deleting the user data
-		FILE *rewrite=fopen("data_buku_pinjam.dat","w");
-		for(i=0;i<jumlah;i++){
-			if(i==arr[data]){
-				continue;
-			}
-			fprintf(rewrite,"%s#%lld#%s#%s#%lld\n",balik[i].p_username,balik[i].tanggal1,balik[i].nama_buku,balik[i].kode_buku,balik[i].tanggal2);
+	FILE *rewrite=fopen("data_buku_pinjam.dat","w");
+	for(i=0;i<jumlah;i++){
+		if(i==arr[data]){
+			continue;
 		}
-		fclose(rewrite);
+		fprintf(rewrite,"%s#%lld#%s#%s#%lld\n",balik[i].p_username,balik[i].tanggal1,balik[i].nama_buku,balik[i].kode_buku,balik[i].tanggal2);
+	}
+	fclose(rewrite);
 	
 	// read the list of book data
-		FILE *data_buku_baca=fopen("data_buku.dat","r");
-		pinjam datbuk[1000];
-		int jumlah2=0;
+	FILE *data_buku_baca=fopen("data_buku.dat","r");
+	pinjam datbuk[1000];
+	int jumlah2=0;
 
-		for(i=0;fgets(line,100000,data_buku_baca);i++){
-			strcpy(datbuk[i].nama,strtok(line,"#"));
-			strcpy(datbuk[i].kode,strtok(NULL,"#"));
-			strcpy(datbuk[i].ketersediaan,strtok(NULL,"\n"));
-			jumlah2++;
+	for(i=0;fgets(line,100000,data_buku_baca);i++){
+		strcpy(datbuk[i].nama,strtok(line,"#"));
+		strcpy(datbuk[i].kode,strtok(NULL,"#"));
+		strcpy(datbuk[i].ketersediaan,strtok(NULL,"\n"));
+		jumlah2++;
+	}
+
+	fclose(data_buku_baca);
+
+	for(i=0;i<jumlah2;i++){
+		if(strcmp(balik[arr[data]].nama_buku,datbuk[i].nama)==0){
+			int pengubah=atoi(datbuk[i].ketersediaan);
+			pengubah++;
+
+			sprintf(datbuk[i].ketersediaan,"%d",pengubah);
+			break;
 		}
+	}
 
-		fclose(data_buku_baca);
-
-		for(i=0;i<jumlah2;i++){
-			if(strcmp(balik[arr[data]].nama_buku,datbuk[i].nama)==0){
-				int pengubah=atoi(datbuk[i].ketersediaan);
-				pengubah++;
-
-				sprintf(datbuk[i].ketersediaan,"%d",pengubah);
-				break;
-			}
-		}
-
-		// rewriting the book data
-		FILE *renew=fopen("data_buku.dat","w");
-		for(i=0;i<jumlah2;i++){
-			fprintf(renew,"%s#%s#%s\n",datbuk[i].nama,datbuk[i].kode,datbuk[i].ketersediaan);
-		}
-		fclose(renew);
+	// rewriting the book data
+	FILE *renew=fopen("data_buku.dat","w");
+	for(i=0;i<jumlah2;i++){
+		fprintf(renew,"%s#%s#%s\n",datbuk[i].nama,datbuk[i].kode,datbuk[i].ketersediaan);
+	}
+	fclose(renew);
 		
 	return;
 }
@@ -432,27 +437,27 @@ void meminjam(char player[]){
 
 // List Function
 void swap(char a[], char b[]){
-    char temp[100];
-    strcpy(temp, b);
-    strcpy(b, a);
-    strcpy(a, temp);
+	char temp[100];
+	strcpy(temp, b);
+	strcpy(b, a);
+	strcpy(a, temp);
 }
 
 void list_buku(){
-    //show the list
-    FILE *reading=fopen("data_buku.dat","r");
-    char line[100000];
-    pinjam datbuk[1000];
-    int jumlah = 0;
-    
-    for(int i=0;fgets(line,1000,reading);i++){
-        strcpy(datbuk[i].nama,strtok(line,"#"));
-        strcpy(datbuk[i].kode,strtok(NULL,"#"));
-        strcpy(datbuk[i].ketersediaan,strtok(NULL,"\n"));
-        jumlah++;
-    }
+	//show the list
+	FILE *reading=fopen("data_buku.dat","r");
+	char line[100000];
+	pinjam datbuk[1000];
+	int jumlah = 0;
+	
+	for(int i=0;fgets(line,1000,reading);i++){
+		strcpy(datbuk[i].nama,strtok(line,"#"));
+		strcpy(datbuk[i].kode,strtok(NULL,"#"));
+		strcpy(datbuk[i].ketersediaan,strtok(NULL,"\n"));
+		jumlah++;
+	}
 
-    // Sort struct datbuk
+	// Sort struct datbuk
   for(int i = 0; i < jumlah - 1; i++){
     for(int j = 0; j < jumlah - 1 - i; j++){
       if(strcmp(datbuk[j].nama, datbuk[j + 1].nama) > 0){
@@ -463,13 +468,13 @@ void list_buku(){
     }
   }
 
-    for(int i=0;i<jumlah;i++){
-        printf("Data Buku ke %d\n",i+1);
-        printf("Nama buku : %s\n",datbuk[i].nama);
-        printf("Kode buku : %s\n",datbuk[i].kode);
-        printf("Ketersediaan buku : %s\n\n",datbuk[i].ketersediaan);
-    }
-    fclose(reading);
+	for(int i=0;i<jumlah;i++){
+			printf("Data Buku ke %d\n",i+1);
+			printf("Nama buku : %s\n",datbuk[i].nama);
+			printf("Kode buku : %s\n",datbuk[i].kode);
+			printf("Ketersediaan buku : %s\n\n",datbuk[i].ketersediaan);
+	}
+	fclose(reading);
 }
 
 char* welcome();
@@ -573,10 +578,10 @@ void signin(){
   int panjang= strlen(password);
 
   if(panjang<8){
-	printf("Maaf, password terlalu pendek. Silahkan input kembali\n ");
-	sleep(2);
-	system("cls");
-	goto sandi;
+		printf("Maaf, password terlalu pendek. Silahkan input kembali\n ");
+		sleep(2);
+		system("cls");
+		goto sandi;
   }
 	else{
 		for(int i=0;i<panjang;i++){
@@ -713,6 +718,7 @@ void edit_buku(){
 	system("cls");
 	design_admin();
 	printf("\n");
+
 	for(int i=0;i<jumlah;i++){
 		printf("Data Buku ke %d\n",i+1);
 		printf("Nama buku : %s\n",datbuk[i].nama);
@@ -723,9 +729,9 @@ void edit_buku(){
 
 	printf("\nPilih menu:\n1. Add\n2. Remove\n3. Back\n");
 	printf("\nPILIHAN : ");
+
 	int jawaban;
 	scanf("%d",&jawaban); getchar();
-	
 
 	char nama_buku[100];
 	if(jawaban==1){
@@ -942,7 +948,7 @@ void admin(){
 /* FUNCTION FOR ADMIN END HERE */
 
 void ngilang(){
-// Buat jeda
+	// Buat jeda
 	int i;
 	for(i=3;i>=1;i--){
 		printf("This text will close in %d...\n", i);
@@ -952,9 +958,9 @@ void ngilang(){
 }
 
 void design(){
-// Function for design E-Library
+	// Function for design E-Library
 	printf("\033[0;32m");
-printf(
+	printf(
   "......................................................\n"
   "|  ______      _      _ _                            |\t\n"
   "| |  ____|    | |    (_) |                           |\t\n"
@@ -1002,6 +1008,7 @@ int main(){
 	if(ac==1){
 		char player_real2[102];
 		strcpy(player_real2, login());
+
 		if(strcmp(player_real2, "admin")==0){
 			admin();	
 		}
@@ -1048,30 +1055,29 @@ int main(){
 			}
 		}
 		else{
-		strcpy(player_real,welcome());
+			strcpy(player_real,welcome());
 
-		char data_blacklist[1000][100];
-		char line[100000];
-		FILE *blacklist=fopen("data_blacklist.dat","r");
+			char data_blacklist[1000][100];
+			char line[100000];
+			FILE *blacklist=fopen("data_blacklist.dat","r");
 
-		for(int i=0;fgets(line,100000,blacklist);i++){
-			strcpy(data_blacklist[i],strtok(line,"\n"));
+			for(int i=0;fgets(line,100000,blacklist);i++){
+				strcpy(data_blacklist[i],strtok(line,"\n"));
 
-			if(strcmp(data_blacklist[i],player_real)==0){
-				design();
-				printf("\nMaaf akun anda sudah terblokir. Silahkan Hubungi pihak admin untuk informasi lebih lanjut\n");
-				exit(0);
+				if(strcmp(data_blacklist[i],player_real)==0){
+					design();
+					printf("\nMaaf akun anda sudah terblokir. Silahkan Hubungi pihak admin untuk informasi lebih lanjut\n");
+					exit(0);
+				}
 			}
-		}
-		fclose(blacklist);
-		goto menu;
+			fclose(blacklist);
+			goto menu;
 		}
 	}
 	else{
 		printf("Input salah!");
 		sleep(1);
 		system("cls");
-
 		goto start;
 	}
 }
