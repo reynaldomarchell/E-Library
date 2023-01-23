@@ -36,11 +36,11 @@ typedef struct kembali_buku{
 	long int tanggal2={};
 }kembalikan;
 
+// Function Declaration
 void design();
 void list_buku();
 void ngilang();
 void design_admin();
-
 
 void credit(){
 //  Credit member of Group 1 from LB75 Class.
