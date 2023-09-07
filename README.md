@@ -1,4 +1,4 @@
-# E-Lybrary
+# E-Library
 This project was made by:
 - Deli Irawan
 - Reynaldo Marchell
